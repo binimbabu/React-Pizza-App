@@ -746,4 +746,7 @@ here based on a condition we can give className.
  
 Components include data, logic and appearance. Data consists of Props and state. Where state is internal data that can be updated by the components logic and props is data coming from outside and can only be updated by parent component. Props are read only, they are immutable. To mutate props we need state. State is used for data change. Props are immutable because if props changes then parent component also changes. Components have to be pure function in terms of state and props (should not change the outside or parent component). This Allows React to optimize apps, avoid bugs. 
 React uses one way data flow ( which means data can flow only from parent to child component by using props but not the opposite way). React is one way data flow because it makes application more predictable and easier to understand for developers, makes application to debug easily, two way data flow is less efficient.
+
+
+Rendering multiple componentsat once using the Javascript .map() method
  
