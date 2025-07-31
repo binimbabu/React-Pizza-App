@@ -1,70 +1,214 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Working with components, props, and JSX
 
-## Available Scripts
 
-In the project directory, you can run:
+Rendering the Root Component and Strict Mode
 
-### `npm start`
+Webpack bundler looks for the entry point to the project through 'index.js'
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Purpose of Strict Mode
+Strict Mode renders all components twice during development to help find certain bugs and checks if outdated parts of the React API are being used. While not groundbreaking, it is a good practice to always activate Strict Mode when developing React applications
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Components as Building Blocks
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+React application are entirely made of components. Components are building blocks of user interfaces. Components are piece of that has its own data, logic and appearance (how it works and looks). To build complex UI's by building multiple components and combining them. Components can be reused , nested inside each other and pass data between them.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+function App() {
+  return (
+    <div>
+      <h1>Welcome to React</h1>
+      <Pizza />
+    </div>
+  );
+}
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+function Pizza() {
+  return <h2>Pizza</h2>;
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Pizza function is nested in App function (i.e  <Pizza />)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+What is JSX
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+JSX is a declarative syntax that we use to describe what components look like and how they work based on their data and logic. So, it's all about the component's appearance. In practice, this means that each component must return one block of JSX, which React will then use to render the component on the user interface.
+JSX is an extension of JavaScript that allows to Embed Javascript, CSS and React components into HTML.
+JSX converted to JavaScript using Babel. This conversion is necessary because the browser isn't aware of JSX. JSX is declarative it describes what Ui should look like using JSX based on current data. React is an abstraction away from DOM and never touches DOM. UI as a reflection of current data. 
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+Styling in components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Inline style
 
-### Advanced Configuration
+function Header() {
+  return (
+    <h1
+      style={{
+        color: "red",
+        fontSize: "32px",
+        textAlign: "center",
+        textTransform: "uppercase",
+      }}
+    >
+      React Pizza App
+    </h1>
+  );
+}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+Using Variables for Styles
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+function Header() {
+  const style = {
+    color: "red",
+    fontSize: "32px",
+    textAlign: "center",
+    textTransform: "uppercase",
+  };
+  return <h1 style={style}>React Pizza App</h1>;
+}
+
+
+
+Importing CSS Files
+
+Webpack takes the imported css files ad injecting them into the application.
+
+
+import "./index.css";
+
+function App() {
+  return (
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  return (
+    <header className="header">
+      <h1>React Pizza App</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <Pizza />
+      <Pizza />
+      <Pizza />
+      <Pizza />
+    </main>
+  );
+}
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+  // else alert("Sorry we are closed");
+  return (
+    <footer className="footer">
+      We are currently open at {new Date().toLocaleTimeString()}
+    </footer>
+  );
+}
+
+function Pizza() {
+  return (
+    <div>
+      <img src="pizzas/spinaci.jpg" alt="Spinach" />
+      <h3>Pizza</h3>
+      <p>Tomato, mozarella, ham, aragula, and burrata cheese</p>
+    </div>
+  );
+}
+
+
+
+
+
+
+Passing and Receiving Props
+
+Props essentially allow us to pass data between components, particularly from parent components to child components. We can imagine props as a communication channel between a parent and a child component.
+
+To define props, we do it in two steps: first, we pass the props into the component, and second, we receive the props in the component that we pass them into
+
+Full example:-
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <Pizza
+        name="Pizza"
+        ingredient="Tomato, mozarella, ham, aragula, and burrata cheese"
+        photoName="pizzas/spinaci.jpg"
+        price={10}
+      />
+      <Pizza
+        name="Pizza funghi"
+        photoName="pizzas/funghi.jpg"
+        ingredient="Tomato Basil"
+        price={20}
+      />
+    </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <div className="pizza">
+      <img src={props.photoName} alt={props.name} />
+      <div>
+        <h3>{props.name}</h3>
+        <p>{props.ingredient}</p>
+        <span>{props.price + 3}</span>
+      </div>
+    </div>
+  );
+}
+
+Here we pass props as shown below
+
+ <Pizza
+        name="Pizza"
+        ingredient="Tomato, mozarella, ham, aragula, and burrata cheese"
+        photoName="pizzas/spinaci.jpg" price={10}
+      />
+
+
+We receive props as below
+
+function Pizza(props)
+
+place the props like this (i.e src={props.photoName})
+
+<img src={props.photoName} alt={props.name} />
+
+
+price={10} is given to denote its a number
+
+
+Props are used to pass data from parent components to child components. Props is an essential tool to configure and customize components. With props parent components control how child components look and work. In props we can pass single values, arrays, objects, functions, even other components.
+Components include data, logic and appearance. Data consists of Props and state. Where state is internal data that can be updated by the components logic and props is data coming from outside and can only be updated by parent component. Props are read only, they are immutable. To mutate props we need state. State is used for data change. Props are immutable because if props changes then parent component also changes. Components have to be pure function in terms of state and props (should not change the outside or parent component). This Allows React to optimize apps, avoid bugs. 
+React uses one way data flow ( which means data can flow only from parent to child component by using props but not the opposite way). React is one way data flow because it makes application more predictable and easier to understand for developers, makes application to debug easily, two way data flow is less efficient.
+ 
