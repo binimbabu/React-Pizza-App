@@ -209,6 +209,187 @@ price={10} is given to denote its a number
 
 
 Props are used to pass data from parent components to child components. Props is an essential tool to configure and customize components. With props parent components control how child components look and work. In props we can pass single values, arrays, objects, functions, even other components.
+
+
+
+
+Rules of JSX
+
+JSX works like HTML, but we can enter 'JavaScript mode' by using {} for text or attributes.
+We can place JavaScript expression inside {}. Examples: reference variables, create arrays or objects, map(), ternary operator.
+Statements (like if/else, for, switch) aren't allowed in JSX.
+JSX produces a JavaScript expression. But we can write JSX anywhere inside a component ( in if/else, assign to variables, pass it into functions). A piece of JSX can only have one root element. If you need more use <React.Fragment> (or short <>)
+
+
+Difference between JSX and HTML
+
+className instead of HTML's class.
+htmlFor instead of HTML's for
+Every tags need to be closed (<img /> )
+All eventHandlers and other properties need to be camelCased (example onClick, onMouseOver)
+CSS inline styles are written like this {{<style>}}
+(to reference a variable and then an object)
+CSS property names are also camelCased
+Comments need to be {}
+
+
+
+
+
+
+
+Rendering Lists
+
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <ul className="pizzas">
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+        ))}
+      </ul>
+    </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredient}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+
+
+Full example
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+//import ReactDOM from "react-dom"; //react version before 18
+import "./index.css";
+
+const pizzaData = [
+  {
+    name: "Focaccia",
+    ingredients: "Bread with italian olive oil and rosemary",
+    price: 6,
+    photoName: "pizzas/focaccia.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Margherita",
+    ingredients: "Tomato and mozarella",
+    price: 10,
+    photoName: "pizzas/margherita.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Spinaci",
+    ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
+    price: 12,
+    photoName: "pizzas/spinaci.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Funghi",
+    ingredients: "Tomato, mozarella, mushrooms, and onion",
+    price: 12,
+    photoName: "pizzas/funghi.jpg",
+    soldOut: false,
+  },
+  {
+    name: "Pizza Salamino",
+    ingredients: "Tomato, mozarella, and pepperoni",
+    price: 15,
+    photoName: "pizzas/salamino.jpg",
+    soldOut: true,
+  },
+  {
+    name: "Pizza Prosciutto",
+    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
+    price: 18,
+    photoName: "pizzas/prosciutto.jpg",
+    soldOut: false,
+  },
+];
+
+function App() {
+  return (
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  return (
+    <header className="header">
+      <h1>React Pizza App</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      <ul className="pizzas">
+        {pizzaData.map((pizza) => (
+          <Pizza pizzaObj={pizza} key={pizza.name} />
+        ))}
+      </ul>
+    </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredient}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+  // else alert("Sorry we are closed");
+  return (
+    <footer className="footer">
+      We are currently open at {new Date().toLocaleTimeString()}
+    </footer>
+  );
+}
+
+//react from version 18 onwards
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+//react version before 18
+//React.render(<App />, document.getElementById("root"))
+
+ 
 Components include data, logic and appearance. Data consists of Props and state. Where state is internal data that can be updated by the components logic and props is data coming from outside and can only be updated by parent component. Props are read only, they are immutable. To mutate props we need state. State is used for data change. Props are immutable because if props changes then parent component also changes. Components have to be pure function in terms of state and props (should not change the outside or parent component). This Allows React to optimize apps, avoid bugs. 
 React uses one way data flow ( which means data can flow only from parent to child component by using props but not the opposite way). React is one way data flow because it makes application more predictable and easier to understand for developers, makes application to debug easily, two way data flow is less efficient.
  
