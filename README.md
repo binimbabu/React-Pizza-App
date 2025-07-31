@@ -389,6 +389,360 @@ root.render(
 //react version before 18
 //React.render(<App />, document.getElementById("root"))
 
+
+
+
+
+
+
+
+Conditional Rendering With &&
+ 
+
+function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      {numPizzas > 0 && (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
+    </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredient}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+  // else alert("Sorry we are closed");
+  return (
+    <footer className="footer">
+      {isOpen && (
+        <div className="order">
+          <p>We are currently open until {closeHour}:00</p>
+          <button className="btn">Order Now</button>
+        </div>
+      )}
+    </footer>
+  );
+}
+
+
+
+
+Conditional Rendering With Ternaries
+
+
+function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      {numPizzas > 0 ? (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : (
+        <p>We are working on the menu please come later</p>
+      )}
+    </main>
+  );
+}
+
+function Pizza(props) {
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredient}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+  // else alert("Sorry we are closed");
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <div className="order">
+          <p>We are currently open until {closeHour}:00</p>
+          <button className="btn">Order Now</button>
+        </div>
+      ) : (
+        <p>
+          We are happy you between {openhour} and {closeHour}
+        </p>
+      )}
+    </footer>
+  );
+}
+
+
+
+
+
+Conditional Rendering With Multiple Returns
+
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+
+  if (!isOpen) return <p>Closed</p>;
+  // else alert("Sorry we are closed");
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <div className="order">
+          <p>We are currently open until {closeHour}:00</p>
+          <button className="btn">Order Now</button>
+        </div>
+      ) : (
+        <p>
+          We are happy you between {openhour} and {closeHour}
+        </p>
+      )}
+    </footer>
+  );
+}
+
+
+
+function Pizza(props) {
+  if (props.pizzaObj.soldOut) return null;
+  return (
+    <li className="pizza">
+      <img src={props.pizzaObj.photoName} alt={props.pizzaObj.name} />
+      <div>
+        <h3>{props.pizzaObj.name}</h3>
+        <p>{props.pizzaObj.ingredient}</p>
+        <span>{props.pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+
+
+
+
+
+
+
+Extracting JSX Into a New Component
+
+
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <Order closeHour={closeHour} />
+      ) : (
+        <p>
+          We are happy you between {openhour} and {closeHour}
+        </p>
+      )}
+    </footer>
+  );
+}
+
+function Order(props) {
+  return (
+    <div className="order">
+      <p>We are currently open until {props.closeHour}:00</p>
+      <button className="btn">Order Now</button>
+    </div>
+  );
+}
+
+
+
+
+
+Destructuring Props
+
+Each time that we pass some props into a component, that component will then automatically receive this object of props, which will contain all the props that we passed in.
+
+Actually, all components receive this props object. So even here in the footer, where we don't pass any props in, we can define that and we can log it to the console. It will be empty then.
+
+What we want to do now is to avoid having to write props.whatever all the time in our component.
+
+
+
+function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+      {numPizzas > 0 ? (
+        <ul className="pizzas">
+          {pizzas.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : (
+        <p>We are working on the menu please come later</p>
+      )}
+    </main>
+  );
+}
+
+function Pizza({ pizzaObj }) {
+  if (pizzaObj.soldOut) return null;
+  return (
+    <li className="pizza">
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredient}</p>
+        <span>{pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+
+We should use 'pizzaObj' which we pass in <Pizza pizzaObj={pizza} key={pizza.name} /> in function Pizza({ pizzaObj }) this is destructuring of not using props
+
+
+Another example
+
+
+function Footer() {
+  const hour = new Date().getHours();
+  const openhour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openhour && hour <= closeHour;
+  // else alert("Sorry we are closed");
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <Order closeHour={closeHour} openhour={openhour} />
+      ) : (
+        <p>
+          We are happy you between {openhour} and {closeHour}
+        </p>
+      )}
+    </footer>
+  );
+}
+
+function Order({ closeHour, openhour }) {
+  return (
+    <div className="order">
+      <p>We are currently open {openhour} from {closeHour}:00</p>
+      <button className="btn">Order Now</button>
+    </div>
+  );
+}
+
+
+function Order({ closeHour, openhour }) where we removed the use of props and just closeHour and openhour.
+
+
+
+
+
+React Fragments
+
+
+React Fragments are a feature in React that allow developers to group multiple elements from a component's render method without introducing an additional wrapper DOM node. Denoted by <>  and </> or   <React.Fragment> </React.Fragment>.
+At some cases we cannot given multiple HTML elements inside a JSX, since as per rule JSX expressions must have one parent element. So to overcome this issue we use React Fragments.
+
+Example
+
+function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+  return (
+    <main className="menu">
+      <h2>Our Menu</h2>
+
+      {numPizzas > 0 ? (
+        <>
+          <p>
+            Authentic Italian cuisine. 6 Creative dishes to choose from. All
+            from our stone oven, all organic, all delicious
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>We are working on the menu please come later</p>
+      )}
+    </main>
+  );
+}
+
+
+
+
+
+
+Setting Classes and Text Conditionally
+
+function Pizza({ pizzaObj }) {
+  return (
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredient}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
+      </div>
+    </li>
+  );
+}
+
+<span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span> this piece of code giving soldOut message if soldOut is true.
+
+
+  <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+ 
+here based on a condition we can give className.
+
  
 Components include data, logic and appearance. Data consists of Props and state. Where state is internal data that can be updated by the components logic and props is data coming from outside and can only be updated by parent component. Props are read only, they are immutable. To mutate props we need state. State is used for data change. Props are immutable because if props changes then parent component also changes. Components have to be pure function in terms of state and props (should not change the outside or parent component). This Allows React to optimize apps, avoid bugs. 
 React uses one way data flow ( which means data can flow only from parent to child component by using props but not the opposite way). React is one way data flow because it makes application more predictable and easier to understand for developers, makes application to debug easily, two way data flow is less efficient.
